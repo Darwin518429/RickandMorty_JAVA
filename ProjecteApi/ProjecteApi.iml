@@ -8,5 +8,9 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="mysql-connector-j-9.6.0" level="project" />
+    <orderEntry type="library" name="jackson-databind-2.21.0" level="project" />
+    <orderEntry type="library" name="jackson-annotations-2.21" level="project" />
+    <orderEntry type="library" name="jackson-core-2.9.9" level="project" />
+    <orderEntry type="library" name="jackson-core-2.21.2" level="project" />
   </component>
 </module>

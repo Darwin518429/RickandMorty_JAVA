@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface  Parser<T> {
 
-List<T> allPersonatges(String Json );
+List<T>ElementperPage(String Json );
 
 //T getPersonatge(int id );
 

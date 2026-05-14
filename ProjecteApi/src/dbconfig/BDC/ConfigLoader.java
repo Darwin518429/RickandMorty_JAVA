@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-public class ConnectConfigLoader {
+public class ConfigLoader {
 
     private static final Map<String, Provider> providers = new HashMap<>();
 
     static {
         try {
-            InputStream input = ConnectConfigLoader.class
+            InputStream input = ConfigLoader.class
                     .getClassLoader()
                     .getResourceAsStream("resources/db.properties");
 
@@ -23,7 +23,7 @@ public class ConnectConfigLoader {
             prop.load(input);
 
             // MYSQL aqui añadimos la base de datos msql en el map para cuando queramos usarla
-            providers.put("mysql", new MySQL_DB_Credentials(
+            providers.put("mysql", new MySQL_Credentials(
                     prop.getProperty("db.mysql.url"),
                     prop.getProperty("db.mysql.user"),
                     prop.getProperty("db.mysql.password")

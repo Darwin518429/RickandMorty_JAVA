@@ -1,10 +1,10 @@
 package Model.rickMortyDB;
 
-public class Personatges {
+public class Personatge {
     protected int id_personatge;
     protected String nom,status,species,tipus,genere;
-    protected  int id_origen,id_localtizacio;
-    public  Personatges(int id_personatge,String nom, String status, String species, String tipus,String genere,int id_origen, int id_lloc ){
+    protected  Integer id_origen,id_localtizacio;
+    public Personatge(Integer id_personatge, String nom, String status, String species, String tipus, String genere, Integer id_origen, int id_lloc ){
         this.id_personatge = id_personatge;
         this.nom = nom;
         this.status = status;

@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class MySQL_DB_Credentials implements Provider{
+public class MySQL_Credentials implements Provider{
 
     private String url;
     private String user;
@@ -15,7 +15,7 @@ public class MySQL_DB_Credentials implements Provider{
      * @param user String Usuari de la BD
      * @param password String Contraseña del usuario
      **/
-    public MySQL_DB_Credentials(String url, String user, String password) {
+    public MySQL_Credentials(String url, String user, String password) {
         this.url = url;
         this.user = user;
         this.password = password;

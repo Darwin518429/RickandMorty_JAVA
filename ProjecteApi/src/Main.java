@@ -1,19 +1,10 @@
-import Api.ApiClient;
-import Api.RickMorty.RickMortyParser;
-import Model.rickMortyDB.Personatges;
-import dbconfig.BDC.ConnectConfigLoader;
-import dbconfig.BDC.Provider;
-import implementation.mysql.rickmorty.mysql_impl_rm;
-
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.List;
+import Api.RickMorty.rickmortyclient;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-     /*   Provider p  = ConnectConfigLoader.getProvider("mysql");
+     /*   Provider p  = ConfigLoader.getProvider("mysql");
         try(
         Connection c = p.getConnection()
         ){
@@ -26,14 +17,14 @@ public class Main {
             System.out.println("Código de error: " + e.getErrorCode());
             System.out.println("SQLState: " + e.getSQLState());
         }*/
-
+/*
         RickMortyParser parser= new RickMortyParser();
-        mysql_impl_rm dao = new mysql_impl_rm();
+        mysqlPersonatge dao = new mysqlPersonatge();
         try {
             String api = Api.ApiClient.fetch("https://rickandmortyapi.com/api/character");
 
-            List<Personatges> ll = parser.allPersonatges(api)   ;
-          for(Personatges p : ll){
+            List<Personatge> ll = parser.allPersonatges(api)   ;
+          for(Personatge p : ll){
               System.out.println(p.getId_localtizacio());
           }
               dao.insertarTots(ll);
@@ -43,6 +34,13 @@ public class Main {
             System.out.println(e);
             System.out.println("Error: " + e.getMessage());
         }
-
+*/
+        rickmortyclient rm = new rickmortyclient();
+      /*  try {
+            rm.Arrencar();
+        }
+        catch (Exception e ){
+            System.out.println(e);
+        }*/
     }
 }

@@ -1,31 +1,31 @@
 package implementation.mysql.rickmorty;
 
-import Api.RickMorty.RickMortyParser;
-import Model.rickMortyDB.Personatges;
-import dbconfig.BDC.ConnectConfigLoader;
+import Model.rickMortyDB.Personatge;
 import dbconfig.BDC.Provider;
 
+import java.util.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.List;
 
-public class mysql_impl_rm {
-    public mysql_impl_rm (){}
+public class mysqlPersonatge {
+    Provider provider;
+    public mysqlPersonatge(Provider p ){
+        provider = p;
+    }
 
- //   RickMortyParser parser= new RickMortyParser();
-    Provider pv = ConnectConfigLoader.getProvider("mysql");
 
-    public  void insertarTots(List<Personatges> llista) throws SQLException {
+
+    public  void insertPersonatges(List<Personatge> llista) throws SQLException {
         String sql = """
                 INSERT IGNORE INTO personatges  VALUES (?,?,?,?,?,?,?,?)
                 """;
 
         try (
-                Connection conn = pv.getConnection();
+             Connection conn = provider.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)
         ) {
-            for (Personatges p : llista) {
+            for (Personatge p : llista) {
                 ps.setInt(1, p.getId_personatge());
                 ps.setString(2, p.getNom());
                 ps.setString(3, p.getStatus());

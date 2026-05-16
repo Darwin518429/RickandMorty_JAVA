@@ -10,12 +10,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 
 
-public class RickMortyParser implements Parser<Personatge> {
+public class PersonatgesParser implements Parser<Personatge> {
 ;
-public RickMortyParser (String UrlPersonatge){
-
-}
-
+public PersonatgesParser(){ }
 
     @Override
     public List<Personatge> ElementperPage(String json ) {
@@ -58,30 +55,6 @@ public RickMortyParser (String UrlPersonatge){
         return llista;
     }
 
-    public String getnextUrlP(String json) {
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode root = mapper.readTree(json);
-            JsonNode next = root.get("info").get("next");
-            if (next.isNull()) return null;
-            return next.asText();
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-            return null;
-        }
-    }
 
-    public String getprevUrlP(String json) {
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode root = mapper.readTree(json);
-            JsonNode prev = root.get("info").get("prev");
-            if (prev.isNull()) return null;
-            return prev.asText();
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-            return null;
-        }
-    }
 }
 

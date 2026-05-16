@@ -18,10 +18,10 @@ public class Main {
             System.out.println("SQLState: " + e.getSQLState());
         }*/
 /*
-        RickMortyParser parser= new RickMortyParser();
+        PersonatgesParser parser= new PersonatgesParser();
         mysqlPersonatge dao = new mysqlPersonatge();
         try {
-            String api = Api.ApiClient.fetch("https://rickandmortyapi.com/api/character");
+            String api = Api.ApiConnection.fetch("https://rickandmortyapi.com/api/character");
 
             List<Personatge> ll = parser.allPersonatges(api)   ;
           for(Personatge p : ll){
@@ -35,7 +35,7 @@ public class Main {
             System.out.println("Error: " + e.getMessage());
         }
 */
-        rickmortyclient rm = new rickmortyclient();
+      //  rickmortyclient rm = new rickmortyclient();
       /*  try {
             rm.Arrencar();
         }

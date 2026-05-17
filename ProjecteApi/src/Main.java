@@ -1,4 +1,5 @@
 import Api.RickMorty.rickmortyclient;
+import AppConfig.Appconfig;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -42,5 +43,6 @@ public class Main {
         catch (Exception e ){
             System.out.println(e);
         }*/
+        Appconfig.personatgecontroller().copiaPersonatgeEndpoint();
     }
 }

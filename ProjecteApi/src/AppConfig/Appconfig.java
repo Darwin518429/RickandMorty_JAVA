@@ -1,5 +1,7 @@
 package AppConfig;
+import Api.ApiConnection;
 import Api.ApiFactory;
+import Api.ConnectionApi;
 import Api.RickMorty.rickmortyclient;
 import Controllers.Elements.personatgeControllers;
 import Service.personatgeService;
@@ -16,7 +18,8 @@ public class Appconfig {
  //APIS Config
 
     private static final rickmortyclient rickmorty = (rickmortyclient) ApiFactory.getApi("rickmorty");
-
+//private  static ConnectionApi  api = new ApiConnection();
+//private static final rickmortyclient r = new rickmortyclient(api,"https://rickandmortyapi.com/api/character");
 
     //DAOS
  private static final  mysqlPersonatge personatgeDAO = DAOLoader.getmysqlPersonatge(bd,provider) ;
@@ -25,7 +28,6 @@ public class Appconfig {
 private static final personatgeService personatgeService = new personatgeService(personatgeDAO,rickmorty);
 
     //CONTROLLERS
-
     private static personatgeControllers personatgecontroller = new personatgeControllers(personatgeService);
 
     public static personatgeControllers personatgecontroller(){

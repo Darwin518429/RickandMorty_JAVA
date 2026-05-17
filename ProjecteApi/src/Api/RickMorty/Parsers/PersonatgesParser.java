@@ -1,4 +1,4 @@
-package Api.RickMorty;
+package Api.RickMorty.Parsers;
 
 import Api.Parser;
 import Model.rickMortyDB.Personatge;
@@ -15,7 +15,7 @@ public class PersonatgesParser implements Parser<Personatge> {
 public PersonatgesParser(){ }
 
     @Override
-    public List<Personatge> ElementperPage(String json ) {
+    public List<Personatge> get(String json ) {
         List<Personatge> llista = new ArrayList<>();
 ;
         try {
@@ -29,10 +29,10 @@ public PersonatgesParser(){ }
                 String locationUrl = node.get("location").get("url").asText();
 
                 // Sacas los IDs del final de cada URL
-                Integer idOrigen = originUrl.isEmpty() ? null :
+                Integer idOrigen = originUrl.isEmpty() ? 0 :
                         Integer.parseInt(originUrl.substring(originUrl.lastIndexOf('/') + 1));
 
-                Integer idLocation = locationUrl.isEmpty() ? null :
+                Integer idLocation = locationUrl.isEmpty() ? 0 :
                         Integer.parseInt(locationUrl.substring(locationUrl.lastIndexOf('/') + 1));
 
                 Personatge p = new Personatge(
@@ -55,6 +55,36 @@ public PersonatgesParser(){ }
         return llista;
     }
 
+public String getNextUrl(String json  ){
 
+    try {
+        ObjectMapper mapper = new ObjectMapper(); // Declarar aquest objecte per utilitzar jacksson
+        JsonNode root    = mapper.readTree(json); // Navegar el json amb rutes igual amb XPATH
+        JsonNode next = root.get("info").get("next");
+
+        if (next.isNull()) return null;
+        return next.asText();
+    } catch (Exception e) {
+        System.out.println("Error: " + e.getMessage());
+        return null;
+    }
+
+}
+
+    public String getPrevUrl(String json){
+
+        try {
+            ObjectMapper mapper = new ObjectMapper(); // Declarar aquest objecte per utilitzar jacksson
+            JsonNode root    = mapper.readTree(json); // Navegar el json amb rutes igual amb XPATH
+
+            return  root.get("info").get("next").asText();
+
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return null;
+        }
+
+    }
 }
 

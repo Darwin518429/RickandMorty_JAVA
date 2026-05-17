@@ -6,4 +6,13 @@ public class personatgeControllers {
          this.service =  service;
 
     }
+
+    public void copiaPersonatgeEndpoint(){
+        try {
+            service.copiaPersonatge();
+        }
+        catch (Exception e ){
+            System.out.println(e);
+        }
+    }
 }

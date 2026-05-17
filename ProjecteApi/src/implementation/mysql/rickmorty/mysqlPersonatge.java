@@ -32,7 +32,7 @@ public class mysqlPersonatge {
                 ps.setString(4, p.getSpecies());
                 ps.setString(5, p.getTipus());
                 ps.setString(6, p.getGenere());
-                ps.setInt(7,p.getId_origen());
+                ps.setInt(7, p.getId_origen());
                 ps.setInt(8,p.getId_localtizacio());
                 ps.executeUpdate();
             }

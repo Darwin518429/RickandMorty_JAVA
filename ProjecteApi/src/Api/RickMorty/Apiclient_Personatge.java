@@ -6,7 +6,7 @@ import Model.rickMortyDB.Personatge;
 import java.util.List;
 
 public interface Apiclient_Personatge extends ApiClientInterface {
-    List<Personatge> getAll() throws Exception;
+    List<Personatge> getAllPersonatge() throws Exception;
 
 
 }

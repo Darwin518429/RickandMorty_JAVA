@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface ApiClientInterface {
 
-    List<Personatge> getAll() throws Exception;
+   // List<Personatge> getAll() throws Exception;
 }

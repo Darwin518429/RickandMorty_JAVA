@@ -1,5 +1,7 @@
 package Api;
 
+import Api.ConnectionEndpoint.ConnectionApi;
+
 //EXISTEIX NOMES PER AGRUPAR
 //EVITAR DE FER UNA INSTANCIA AMB EK ABSTRACT
 public  abstract class ApiClientGeneric {

@@ -2,7 +2,7 @@ package Api.RickMorty;
 
 import Api.ApiClientGeneric;
 import Api.ApiClientInterface;
-import Api.ConnectionApi;
+import Api.ConnectionEndpoint.ConnectionApi;
 import Api.RickMorty.Parsers.PersonatgesParser;
 import Model.rickMortyDB.Personatge;
 
@@ -38,5 +38,23 @@ String urlCanviat = url;
 
 
     return tots;
+}
+
+@Override
+    public List<String> getJsons() throws Exception{
+        List<String> l = new ArrayList<>();
+
+    String urlCanviat = url;
+
+    while (urlCanviat != null && !urlCanviat.isBlank()) {
+        String json = api.fetch(urlCanviat);           // fetch pagina actual
+        l.add(json);
+        urlCanviat = parser.getNextUrl(json);
+
+        // termina fins estar buit
+        System.out.println("pagina llegida");
+        Thread.sleep(500); // FER UNA PAUSA PER CADA PAGINA
+    }
+    return  l;
 }
 }

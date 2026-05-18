@@ -22,7 +22,7 @@ public class Main {
         PersonatgesParser parser= new PersonatgesParser();
         mysqlPersonatge dao = new mysqlPersonatge();
         try {
-            String api = Api.ApiConnection.fetch("https://rickandmortyapi.com/api/character");
+            String api = Api.ConnectionEndpoint.ApiConnection.fetch("https://rickandmortyapi.com/api/character");
 
             List<Personatge> ll = parser.allPersonatges(api)   ;
           for(Personatge p : ll){
@@ -43,6 +43,7 @@ public class Main {
         catch (Exception e ){
             System.out.println(e);
         }*/
-        Appconfig.personatgecontroller().copiaPersonatgeEndpoint();
+      //  Appconfig.personatgecontroller().copiaPersonatgeEndpoint();
+       // Appconfig.personatgecontroller().mostrarJson();
     }
 }

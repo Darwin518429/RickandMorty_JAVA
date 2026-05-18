@@ -10,4 +10,27 @@ public class Localitzacions {
         this.tipus = tipus;
     }
 
+    public int getId_localitzacions() {
+        return id_localitzacions;
+    }
+
+    public void setId_localitzacions(int id_localitzacions) {
+        this.id_localitzacions = id_localitzacions;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getTipus() {
+        return tipus;
+    }
+
+    public void setTipus(String tipus) {
+        this.tipus = tipus;
+    }
 }

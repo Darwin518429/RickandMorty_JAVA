@@ -12,5 +12,6 @@
     <orderEntry type="library" name="jackson-annotations-2.21" level="project" />
     <orderEntry type="library" name="jackson-core-2.9.9" level="project" />
     <orderEntry type="library" name="jackson-core-2.21.2" level="project" />
+    <orderEntry type="library" name="gson-2.10.1" level="project" />
   </component>
 </module>

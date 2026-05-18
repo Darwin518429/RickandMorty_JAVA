@@ -16,8 +16,17 @@ public class personatgeService {
     }
 public void copiaPersonatge () throws Exception{
     List<Personatge> personatges = api.getAllPersonatge();
-    personatgedao.insertPersonatges(personatges);
-
+    personatgedao.copiaTotal(personatges);
 
 }
+
+    public List<String> getJson(){
+        try {
+          return   api.getJsons();
+        }
+        catch (Exception e ){
+            System.out.println(e);
+            return null;
+        }
+    }
 }

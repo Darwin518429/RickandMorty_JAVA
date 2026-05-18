@@ -1,12 +1,9 @@
-package Api;
+package Api.ConnectionEndpoint;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
 
 public class ApiConnection implements ConnectionApi {
 
@@ -21,20 +18,6 @@ public class ApiConnection implements ConnectionApi {
             return sb.toString();
         }
 
-    @Override
-    public  List<String> fecthAll(String baseUrl, Function<String, String> nextUrlExtractor) throws Exception{
-        List<String> jsons = new ArrayList<>();
-
-        String url = baseUrl;
-
-        while (url != null) {
-            String json = fetch(url);
-            jsons.add(json);
-            url = nextUrlExtractor.apply(json); // cada uno sabe cómo sacar la siguiente URL
-        }
-
-        return jsons;
-    }
 
 
         }

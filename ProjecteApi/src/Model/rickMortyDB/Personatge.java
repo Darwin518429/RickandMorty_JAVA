@@ -15,6 +15,10 @@ public class Personatge {
         this.id_localtizacio = id_lloc;
     }
 
+    public Personatge() {
+
+    }
+
     public int getId_personatge() {
         return id_personatge;
     }

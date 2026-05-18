@@ -1,5 +1,7 @@
 package Api;
 
+import Api.ConnectionEndpoint.ApiConnection;
+import Api.ConnectionEndpoint.ConnectionApi;
 import Api.RickMorty.rickmortyclient;
 import dbconfig.BDC.ConfigLoader;
 
@@ -11,7 +13,7 @@ import java.util.Properties;
 
 public class ApiFactory {
 //Aqui es donde especificamos cual quereos acceder
-private static final Map<String, ApiClientInterface> clients = new HashMap<>();
+private static final Map<String, ApiClientGeneric> clients = new HashMap<>();
 //API CLIENTS
 private static ConnectionApi api = new ApiConnection();
 
@@ -42,9 +44,9 @@ private static ConnectionApi api = new ApiConnection();
      * @param type String  indicamos la tecnologia/SGBD que queramos acceder
      * @return Devuelve el objeto ConnectionProvider
      **/
-    public static ApiClientInterface getApi(String type) {
+    public static ApiClientGeneric getApi(String type) {
 
-      ApiClientInterface client = clients.get(type);
+      ApiClientGeneric client = clients.get(type);
         if (client  == null) {
             throw new RuntimeException("API : " +" "+ type);
         }

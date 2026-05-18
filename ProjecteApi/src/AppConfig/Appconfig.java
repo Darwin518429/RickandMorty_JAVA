@@ -1,7 +1,5 @@
 package AppConfig;
-import Api.ApiConnection;
 import Api.ApiFactory;
-import Api.ConnectionApi;
 import Api.RickMorty.rickmortyclient;
 import Controllers.Elements.personatgeControllers;
 import Service.personatgeService;

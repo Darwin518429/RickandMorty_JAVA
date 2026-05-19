@@ -21,10 +21,27 @@ public class personatgeControllers {
 
 
     public void mostrarJson(){
-        List<String> l = service.getJson();
+       try {
+           List<String> l = service.getJson();
 
-        for(String t : l){
-            System.out.println(t+ "\n--------------------");
+           for (String t : l) {
+               System.out.println(t + "\n--------------------");
+           }
+       }catch (Exception e){
+           System.out.println(e);
+       }
+    }
+
+    public void mostrarJsonArxiu(){
+        try {
+            List<String> l = service.getJsonLocal();
+            for(String t : l ){
+                System.out.println(t + "\n------------------");
+            }
         }
+        catch (Exception e ){
+            System.out.println(e);
+        }
+
     }
 }

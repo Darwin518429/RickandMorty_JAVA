@@ -2,7 +2,6 @@ package dao;
 
 import Model.rickMortyDB.Personatge;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface Personatges extends DAO<Personatge, Integer>{
@@ -14,5 +13,6 @@ public interface Personatges extends DAO<Personatge, Integer>{
 @Override
     List<Personatge> getAll();
 
-    void copiaTotal(List<Personatge> l ) ;
+
+    void copiaParcial(List<Personatge> l ) ;
 }

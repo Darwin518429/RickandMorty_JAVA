@@ -18,7 +18,7 @@ public class mysqlPersonatge implements Personatges {
 
 
 @Override
-    public  void copiaTotal(List<Personatge> llista) {
+    public  void copiaParcial(List<Personatge> llista) {
         String sql = """
                 INSERT IGNORE INTO personatges  VALUES (?,?,?,?,?,?,?,?)
                 """;

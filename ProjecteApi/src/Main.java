@@ -45,5 +45,6 @@ public class Main {
         }*/
       //  Appconfig.personatgecontroller().copiaPersonatgeEndpoint();
        // Appconfig.personatgecontroller().mostrarJson();
+      //  Appconfig.personatgecontroller().mostrarJsonArxiu();
     }
 }

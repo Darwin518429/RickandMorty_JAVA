@@ -3,67 +3,77 @@ package Api.RickMorty;
 import Api.ApiClientGeneric;
 import Api.ApiClientInterface;
 import Api.ConnectionEndpoint.ConnectionApi;
-import Api.RickMorty.Parsers.PersonatgesParser;
+import Api.RickMorty.Parsers.LocalitzacioParser;
+import Api.RickMorty.Parsers.PersonatgeParser;
+import Model.rickMortyDB.Localitzacion;
 import Model.rickMortyDB.Personatge;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.File;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class rickmortyclient  extends ApiClientGeneric implements ApiClientInterface, Apiclient_Personatge{
+public class rickmortyclient  extends ApiClientGeneric implements ApiClientInterface, Apiclient_Personatge,Apiclient_Localitzacio{
 //CARPETA
     File carpeta = new File("./src/resources/Json");
-    File rutes[] = carpeta.listFiles();
-    //OBJECTES PROPIS DEL RICKMORTY
-    PersonatgesParser parser = new PersonatgesParser();
+    File[] rutes = carpeta.listFiles();
+   //CLIENT
+    /*
+     0=https://rickandmortyapi.com/api/character
+     1=https://rickandmortyapi.com/api/location
+     2=https://rickandmortyapi.com/api/episode
+    */
+String urlPersonatge = url[0];
+String urlLocation = url[1];
+String urlEpisode = url[2];
 
-    public  rickmortyclient(ConnectionApi api , String url ){
+    //OBJECTES PROPIS DEL RICKMORTY
+    PersonatgeParser parserP = new PersonatgeParser();
+    LocalitzacioParser parserL = new LocalitzacioParser();
+    public  rickmortyclient(ConnectionApi api , String ...url ){
     super(api,url);
     }
 
-
+//Personatges
 @Override
 public List<Personatge>  getAllPersonatge() throws Exception {
     List<Personatge> tots = new ArrayList<>();
 
-String urlCanviat = url;
+String urlCanviat = urlPersonatge;
 
     while (urlCanviat != null && !urlCanviat.isBlank()) {
         String json = api.fetch(urlCanviat);           // fetch pagina actual
-        tots.addAll(parser.get(json)); //  afegir els  20 de les pagines
-        urlCanviat = parser.getNextUrl(json);     // termina fins estar buit
-        System.out.println("pagina llegida");
+        tots.addAll(parserP.get(json)); //  afegir els  20 de les pagines
+        urlCanviat = parserP.getNextUrl(json);     // termina fins estar buit
+      //  System.out.println("pagina llegida");
         Thread.sleep(500); // FER UNA PAUSA PER CADA PAGINA
     }
 
 
     return tots;
 }
-//VIA ENPOINT MOSTRAR TOT EL JSON
-@Override
-    public List<String> getJsons() throws Exception{
+//VIA ENPOINT PERSONTAGES MOSTRAR TOT EL JSON
+public List<String> getJsonsPersonatge() throws Exception{
         List<String> l = new ArrayList<>();
 
-    String urlCanviat = url;
+    String urlCanviat = urlPersonatge;
 
     while (urlCanviat != null && !urlCanviat.isBlank()) {
         String json = api.fetch(urlCanviat);           // fetch pagina actual
         String format = formatJson(json);
         l.add(format);
-        urlCanviat = parser.getNextUrl(json);
+        urlCanviat = parserP.getNextUrl(json);
 
         // termina fins estar buit
-       // System.out.println("pagina llegida");
-        Thread.sleep(500); // FER UNA PAUSA PER CADA PAGINA AIXO EL FEM PERQUE EL PROVEIDOR POT BLOQUEHAR SI DETECTA MOLTS PETICIONS
 
+        Thread.sleep(500); // FER UNA PAUSA PER CADA PAGINA AIXO EL FEM PERQUE EL PROVEIDOR POT BLOQUEHAR SI DETECTA MOLTS PETICIONS
 
     }
     return  l;
 }
-public List<String>  jsonLocalAll() throws Exception{
+// VIA JSON ARXIU PERSONATGE
+
+public List<String> jsonLocalAllPersonatge() throws Exception{
 List<String> l = new ArrayList<>();
 for(File r : rutes) {
     String json = formatJson(api.fetchFile(r.getPath()));
@@ -73,6 +83,24 @@ for(File r : rutes) {
 
 return l;
 }
+
+
+
+//METODES PER OBTENIR LOCALITZACIONS PER  LES FONTS DE DADES
+@Override
+    public List<Localitzacion> getAllLocalitzacions() throws Exception{
+        List<Localitzacion> l  =  new ArrayList<>();
+
+        return l;
+
+
+}
+@Override
+    public List<String> getJsons() throws Exception{
+    List<String> txt = new ArrayList<>();
+    return txt;
+}
+
 
 private String formatJson(String json){
         try {

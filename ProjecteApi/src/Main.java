@@ -19,7 +19,7 @@ public class Main {
             System.out.println("SQLState: " + e.getSQLState());
         }*/
 /*
-        PersonatgesParser parser= new PersonatgesParser();
+        PersonatgeParser parser= new PersonatgeParser();
         mysqlPersonatge dao = new mysqlPersonatge();
         try {
             String api = Api.ConnectionEndpoint.ApiConnection.fetch("https://rickandmortyapi.com/api/character");
@@ -43,8 +43,11 @@ public class Main {
         catch (Exception e ){
             System.out.println(e);
         }*/
-      //  Appconfig.personatgecontroller().copiaPersonatgeEndpoint();
-       // Appconfig.personatgecontroller().mostrarJson();
-      //  Appconfig.personatgecontroller().mostrarJsonArxiu();
+        //  Appconfig.personatgecontroller().copiaPersonatgeEndpoint();
+        // Appconfig.personatgeController().mostrarJson();
+        //  Appconfig.personatgecontroller().mostrarJsonArxiu();
+        // Appconfig.personatgeController().LlistarPersonatgesBd();
+
+        //Appconfig.personatgeController().mostrarPersonatgesStatus("d");
     }
 }

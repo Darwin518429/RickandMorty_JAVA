@@ -10,9 +10,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 
 
-public class PersonatgesParser implements Parser<Personatge> {
+public class PersonatgeParser implements Parser<Personatge> {
 ;
-public PersonatgesParser(){ }
+public PersonatgeParser(){ }
 
     @Override
     public List<Personatge> get(String json ) {

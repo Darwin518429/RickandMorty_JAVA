@@ -1,4 +1,5 @@
 package Controllers.Elements;
+import Model.DTO.personatgeDTO;
 import Service.*;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public class personatgeControllers {
 
     public void copiaPersonatgeEndpoint(){
         try {
-            service.copiaPersonatge();
+            service.copiaParcial();
         }
         catch (Exception e ){
             System.out.println(e);
@@ -43,5 +44,31 @@ public class personatgeControllers {
             System.out.println(e);
         }
 
+    }
+
+    public void mostrarPersonatgesStatus(String p){
+        try{
+           List<personatgeDTO> pdto =  service.getPersonatgeStatusDTO(p);
+           for(personatgeDTO dto : pdto){
+               System.out.println(dto);
+           }
+        }catch (Exception e ){
+            System.out.println(e);
+        }
+    }
+
+
+
+    public void LlistarPersonatgesBd() {
+        try {
+            List<personatgeDTO> pdto = service.getAllPersonatgeDTO();
+
+            for(personatgeDTO dto : pdto){
+                System.out.println(dto);
+            }
+
+        }catch (Exception e ){
+            System.out.println(e);
+        }
     }
 }

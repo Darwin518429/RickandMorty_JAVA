@@ -30,40 +30,33 @@ private static ConnectionApi api = new ApiConnection();
             Properties prop = new Properties();
             prop.load(input);
 
-            // MYSQL aqui añadimos la base de datos msql en el map para cuando queramos usarla
-            clients.put(prop.getProperty("api.rickmorty.nom"), new rickmortyclient(api, prop.getProperty("api.rickmorty.url"))) ;
+            //Afegim api
+            clients.put(prop.getProperty("api.rickmorty.nom"),
+                    new rickmortyclient(api,
+                    prop.getProperty("api.rickmorty.url.character"),
+                    prop.getProperty("api.rickmorty.url.location"),
+                    prop.getProperty("api.rickmorty.url.episode")
+                    )
+            );
 
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Error cargando configuración de BD");
+            throw new RuntimeException("Error de posar");
         }
     }
 
     /**
-     * @param type String  indicamos la tecnologia/SGBD que queramos acceder
-     * @return Devuelve el objeto ConnectionProvider
+     * @param type String  acceidr la api que volem
+     * @return ApiClientGeneric
      **/
     public static ApiClientGeneric getApi(String type) {
 
       ApiClientGeneric client = clients.get(type);
         if (client  == null) {
-            throw new RuntimeException("API : " +" "+ type);
+            throw new RuntimeException("API:  " + type);
         }
 
         return client ; // devolvemos el provedor que usara el provider para hacer la conexion
     }
-
-
- /*   private static ConnectionApi api  = new ApiConnection();
-    static {
-        clients.put("rickmorty", new rickmortyclient(api , "https://rickandmortyapi.com/api/character"));
-        // clients.put("pokemon", new pokemonClient(apiClient, "https://pokeapi.co/api/v2/pokemon"));
-    }
-    public static ApiClientInterface getApi(String api ) {
-        return clients.get(api);
-    }*/
-/*private void introduir_comrprovar(String key, ) throws  Exception {
-    clients.put("rickmorty", new rickmortyclient(apiClient, "https://rickandmortyapi.com/api/character"));
-}*/
 }

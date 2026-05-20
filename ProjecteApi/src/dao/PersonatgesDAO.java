@@ -4,7 +4,7 @@ import Model.rickMortyDB.Personatge;
 
 import java.util.List;
 
-public interface Personatges extends DAO<Personatge, Integer>{
+public interface PersonatgesDAO extends DAO<Personatge, Integer>{
 
     //void set (Integer id );
 
@@ -13,6 +13,6 @@ public interface Personatges extends DAO<Personatge, Integer>{
 @Override
     List<Personatge> getAll();
 
-
+List<Personatge> getStatus(String status);
     void copiaParcial(List<Personatge> l ) ;
 }

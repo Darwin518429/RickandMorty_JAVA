@@ -1,7 +1,7 @@
 package implementation.mysql.rickmorty;
 
 import Model.rickMortyDB.Personatge;
-import dao.Personatges;
+import dao.PersonatgesDAO;
 import dbconfig.BDC.Provider;
 
 import java.sql.ResultSet;
@@ -10,7 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class mysqlPersonatge implements Personatges {
+public class mysqlPersonatge implements PersonatgesDAO {
     Provider provider;
     public mysqlPersonatge(Provider p ){
         provider = p;
@@ -47,7 +47,7 @@ public class mysqlPersonatge implements Personatges {
 
     @Override
     public Personatge get (Integer id) {
-        String sql = "SELECT * FROM personatges";
+        String sql = "SELECT * FROM personatges WHERE id_personatge = ? ";
 
         try (Connection conn = provider.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -68,9 +68,46 @@ public class mysqlPersonatge implements Personatges {
     }
     @Override
     public List<Personatge> getAll(){
-        List<Personatge> ps = new ArrayList<>();
-        return ps;
+        List<Personatge> p = new ArrayList<>();
+
+        String sql = "SELECT * FROM personatges ";
+
+        try (Connection conn = provider.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    p.add(map(rs));
+                }
+                return p;
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+            return null;
+        }
     }
+
+    @Override
+    public List<Personatge> getStatus(String status){
+        List<Personatge> p =  new ArrayList<>();
+        String sql = """
+                SELECT * FROM personatges WHERE status  = ?
+                """;
+
+        try(Connection conn = provider.getConnection();
+        PreparedStatement ps = conn.prepareStatement(sql) ){
+            ps.setString(1,status);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                p.add(map(rs));
+            }
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+        return p;
+    }
+
 
     private Personatge map(ResultSet rs) throws SQLException {
 
@@ -78,7 +115,7 @@ public class mysqlPersonatge implements Personatges {
         p.setId_personatge(rs.getInt("id_personatge"));
         p.setNom(rs.getString("nom"));
         p.setStatus(rs.getString("status"));
-        p.setSpecies(rs.getString("species"));
+        p.setSpecies(rs.getString("especies"));
         p.setTipus(rs.getString("tipus"));
         p.setGenere(rs.getString("genere"));
         p.setId_origen(rs.getInt("origen"));
@@ -86,6 +123,8 @@ public class mysqlPersonatge implements Personatges {
 
         return p;
     }
+
+
 }
 
 

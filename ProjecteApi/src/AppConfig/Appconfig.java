@@ -1,7 +1,9 @@
 package AppConfig;
 import Api.ApiFactory;
 import Api.RickMorty.rickmortyclient;
+import Controllers.Elements.LocalitzacioControllers;
 import Controllers.Elements.personatgeControllers;
+import Service.LocalitzacioService;
 import Service.personatgeService;
 import dbconfig.BDC.ConfigLoader;
 import dbconfig.BDC.Provider;
@@ -16,19 +18,26 @@ public class Appconfig {
  //APIS Config
 
     private static final rickmortyclient rickmorty = (rickmortyclient) ApiFactory.getApi("rickmorty");
-//private  static ConnectionApi  api = new ApiConnection();
-//private static final rickmortyclient r = new rickmortyclient(api,"https://rickandmortyapi.com/api/character");
+
 
     //DAOS
  private static final  mysqlPersonatge personatgeDAO = DAOLoader.getmysqlPersonatge(bd,provider) ;
+private static final  mysqlLocalitzacion localitzacioDAO = DAOLoader.getmysqllocalitzacio(bd,provider);
 
-    //SERVICES
-private static final personatgeService personatgeService = new personatgeService(personatgeDAO,rickmorty);
-
+//SERVICES
+private static final personatgeService personatgeService = new personatgeService(personatgeDAO,rickmorty,localitzacioDAO);
+private static final LocalitzacioService localitzacioService = new LocalitzacioService(localitzacioDAO);
     //CONTROLLERS
     private static personatgeControllers personatgecontroller = new personatgeControllers(personatgeService);
+    private static LocalitzacioControllers localitzaciocontroller = new LocalitzacioControllers(localitzacioService);
 
-    public static personatgeControllers personatgecontroller(){
+   //METODES PER PODR UTILITZAR
+    public static personatgeControllers personatgeController(){
         return personatgecontroller;
     }
+
+    public static LocalitzacioControllers localitzacioController(){return localitzaciocontroller;}
+
+
+
 }

@@ -17,4 +17,18 @@ public class DAOLoader {
         }
     }
 
+    public static mysqlLocalitzacion getmysqllocalitzacio(String dbType, Provider provider) {
+        switch (dbType) {
+
+            case "mysql":
+                return new mysqlLocalitzacion(provider);
+
+            case "mongodb":
+                throw new RuntimeException("mongodb no implementat");
+
+            default:
+                throw new RuntimeException("Bd no soportada  " + dbType);
+        }
+    }
+
 }

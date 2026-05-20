@@ -8,5 +8,7 @@ import java.util.List;
 public interface Apiclient_Personatge extends ApiClientInterface {
     List<Personatge> getAllPersonatge() throws Exception;
 
-List<String> getJsons() throws Exception;
+List<String> getJsonsPersonatge() throws Exception;
+
+
 }

@@ -6,9 +6,9 @@ import Api.ConnectionEndpoint.ConnectionApi;
 //EVITAR DE FER UNA INSTANCIA AMB EK ABSTRACT
 public  abstract class ApiClientGeneric {
     protected ConnectionApi api;
-    protected String url;
+    protected String[] url;
 
-    public ApiClientGeneric(ConnectionApi api, String url) {
+    public ApiClientGeneric(ConnectionApi api, String ...url) {
         this.api = api;
         this.url = url;
     }

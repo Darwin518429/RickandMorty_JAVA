@@ -12,7 +12,7 @@ public class LocalitzacioParser implements Parser<Localitzacion> {
     public LocalitzacioParser(){}
 
     @Override
-    public List<Localitzacion> get(String json ){
+    public List<Localitzacion> getAll(String json ){
         List<Localitzacion> llista = new ArrayList<>();
 
         try {

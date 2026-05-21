@@ -15,7 +15,7 @@ public class PersonatgeParser implements Parser<Personatge> {
 public PersonatgeParser(){ }
 
     @Override
-    public List<Personatge> get(String json ) {
+    public List<Personatge> getAll(String json ) {
         List<Personatge> llista = new ArrayList<>();
 ;
         try {
@@ -55,6 +55,43 @@ public PersonatgeParser(){ }
         return llista;
     }
 
+    public  Personatge getPersonatge(String json , int id ) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode root = mapper.readTree(json);
+            JsonNode results = root.get("results");
+            for (JsonNode node : results) {
+                if(node.get("id").asInt() == id ) {
+                    String originUrl = node.get("origin").get("url").asText();
+                    String locationUrl = node.get("location").get("url").asText();
+
+                    // Sacas los IDs del final de cada URL
+                    Integer idOrigen = originUrl.isEmpty() ? 0 :
+                            Integer.parseInt(originUrl.substring(originUrl.lastIndexOf('/') + 1));
+
+                    Integer idLocation = locationUrl.isEmpty() ? 0 :
+                            Integer.parseInt(locationUrl.substring(locationUrl.lastIndexOf('/') + 1));
+
+                    Personatge p = new Personatge(
+                            node.get("id").asInt(),
+                            node.get("name").asText(),
+                            node.get("status").asText(),
+                            node.get("species").asText(),
+                            node.get("type").asText(),
+                            node.get("gender").asText(),
+                            idOrigen,
+                            idLocation
+                    );
+                    return p;
+                }
+            }
+        }catch (Exception e ){
+            System.out.println(e);
+            return null;
+        }
+        return null;
+    }
+    // OBTINDRE LES DIFERENTS BD
 public String getNextUrl(String json  ){
 
     try {

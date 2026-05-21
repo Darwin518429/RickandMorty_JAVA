@@ -79,14 +79,40 @@ public List<personatgeDTO> getPersonatgeStatusDTO(String tipus ) throws Exceptio
 }
 
 
+    public void addPersonatge(Personatge p ){
+        personatgedao.addPersonatge(p);
+    }
+
+    public void updatePersonatge(Personatge p ) throws  Exception{
+        if(p == null) throw  new Exception("Error ");
+        personatgedao.updatePersonatge(p);
+
+    }
+
 // VIA ENDPOINT
     public List<String> getJson() throws Exception{
           return   api.getJsonsPersonatge();
 
     }
+
+    public Personatge getPersonatgeApi(int id ) throws Exception{
+        if(id < 0 ) throw new Exception("Error");
+        Personatge p = api.getPersonatgeApi(id);
+        return p;
+    }
+
+
+
+
 // VIA LOCAL
     public List<String> getJsonLocal() throws Exception{
         return api.jsonLocalAllPersonatge();
+    }
+
+    public Personatge getPersonatgeLocal(int id) throws  Exception{
+        if(id < 0 ) throw new Exception("Error");
+        Personatge p = api.getPersonatgeLocal(id);
+        return p;
     }
     }
 

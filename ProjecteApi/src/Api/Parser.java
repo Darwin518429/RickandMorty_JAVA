@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface  Parser<T> {
 
-List<T>get(String Json);
+List<T> getAll(String Json);
 
 
 

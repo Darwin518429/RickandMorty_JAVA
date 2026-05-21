@@ -43,7 +43,7 @@ String urlCanviat = urlPersonatge;
 
     while (urlCanviat != null && !urlCanviat.isBlank()) {
         String json = api.fetch(urlCanviat);           // fetch pagina actual
-        tots.addAll(parserP.get(json)); //  afegir els  20 de les pagines
+        tots.addAll(parserP.getAll(json)); //  afegir els  20 de les pagines
         urlCanviat = parserP.getNextUrl(json);     // termina fins estar buit
       //  System.out.println("pagina llegida");
         Thread.sleep(500); // FER UNA PAUSA PER CADA PAGINA
@@ -52,7 +52,9 @@ String urlCanviat = urlPersonatge;
 
     return tots;
 }
-//VIA ENPOINT PERSONTAGES MOSTRAR TOT EL JSON
+
+
+//VIA ENPOINT Personatge
 public List<String> getJsonsPersonatge() throws Exception{
         List<String> l = new ArrayList<>();
 
@@ -71,7 +73,16 @@ public List<String> getJsonsPersonatge() throws Exception{
     }
     return  l;
 }
-// VIA JSON ARXIU PERSONATGE
+public Personatge getPersonatgeApi(int id ) throws Exception{
+      //  Personatge p = null;
+    List<String> json =  getJsonsPersonatge();
+        for(String j : json){
+            Personatge  p = parserP.getPersonatge(j,id);
+            if(p != null) return p;
+        }
+        return null;
+}
+// VIA JSON ARXIU Personatge
 
 public List<String> jsonLocalAllPersonatge() throws Exception{
 List<String> l = new ArrayList<>();
@@ -84,7 +95,15 @@ for(File r : rutes) {
 return l;
 }
 
-
+public Personatge getPersonatgeLocal(int id ) throws Exception{
+        //  Personatge p = null;
+        List<String> json =  jsonLocalAllPersonatge();
+        for(String j : json){
+            Personatge  p = parserP.getPersonatge(j,id);
+            if(p != null) return p;
+        }
+        return null;
+    }
 
 //METODES PER OBTENIR LOCALITZACIONS PER  LES FONTS DE DADES
 @Override
@@ -95,13 +114,14 @@ return l;
 
 
 }
+
 @Override
     public List<String> getJsons() throws Exception{
     List<String> txt = new ArrayList<>();
     return txt;
 }
 
-
+// FORMAT DE JSON
 private String formatJson(String json){
         try {
             ObjectMapper objectMapper = new ObjectMapper();

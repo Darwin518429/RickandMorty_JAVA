@@ -61,7 +61,7 @@ public class mysqlPersonatge implements PersonatgesDAO {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException("Error obteniendo sector por id", e);
+            throw new RuntimeException("Error en obindre personatge ", e);
         }
 
         return null;
@@ -124,7 +124,62 @@ public class mysqlPersonatge implements PersonatgesDAO {
         return p;
     }
 
+    @Override
+    public void addPersonatge(Personatge p ){
+        String sql = """
+                INSERT INTO personatges VALUES(?,?,?,?,?,?,?,?)
+                """;
 
+        try(Connection conn = provider.getConnection();
+        PreparedStatement ps = conn.prepareStatement(sql)
+        ){
+            ps.setInt(1,p.getId_personatge());
+            ps.setString(2,p.getNom());
+            ps.setString(3,p.getStatus());
+            ps.setString(4,p.getSpecies());
+            ps.setString(5, p.getTipus());
+            ps.setString(6,p.getGenere());
+            ps.setInt(7,p.getId_origen());
+            ps.setInt(8,p.getId_localtizacio());
+
+         int f =    ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+@Override
+public void updatePersonatge(Personatge p ){
+        String sql = """
+                UPDATE personatges SET
+                                       nom  = ?,
+                                       status = ?, 
+                                       especies = ?,
+                                       tipus =?,
+                                       genere =?,
+                                       origen =? ,
+                                       localitzacio = ? 
+                                       WHERE id_personatge = ?
+                """;
+            try(Connection conn = provider.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)
+            ){
+
+                ps.setString(1, p.getNom());
+                ps.setString(2, p.getStatus());
+                ps.setString(3, p.getSpecies());
+                ps.setString(4, p.getTipus());
+                ps.setString(5, p.getGenere());
+                ps.setInt(6, p.getId_origen());
+                ps.setInt(7,p.getId_localtizacio());
+                ps.setInt(8, p.getId_personatge());
+
+                ps.executeUpdate();
+            }
+            catch (SQLException e ){
+                System.out.println(e);
+            }
+
+}
 }
 
 

@@ -14,5 +14,7 @@ public interface PersonatgesDAO extends DAO<Personatge, Integer>{
     List<Personatge> getAll();
 
 List<Personatge> getStatus(String status);
-    void copiaParcial(List<Personatge> l ) ;
+void copiaParcial(List<Personatge> l );
+void addPersonatge(Personatge p );
+void updatePersonatge(Personatge p );
 }

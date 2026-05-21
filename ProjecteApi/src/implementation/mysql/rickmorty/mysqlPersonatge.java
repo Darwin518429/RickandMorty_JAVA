@@ -108,21 +108,32 @@ public class mysqlPersonatge implements PersonatgesDAO {
         return p;
     }
 
+public void copiaTotal(List<Personatge> l ){
+    String sql = """
+               REPLACE  INTO personatges  VALUES (?,?,?,?,?,?,?,?)
+                """;
 
-    private Personatge map(ResultSet rs) throws SQLException {
-
-        Personatge p  = new Personatge();
-        p.setId_personatge(rs.getInt("id_personatge"));
-        p.setNom(rs.getString("nom"));
-        p.setStatus(rs.getString("status"));
-        p.setSpecies(rs.getString("especies"));
-        p.setTipus(rs.getString("tipus"));
-        p.setGenere(rs.getString("genere"));
-        p.setId_origen(rs.getInt("origen"));
-        p.setId_localtizacio(rs.getInt("localitzacio"));
-
-        return p;
+    try (
+            Connection conn = provider.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)
+    ) {
+        for (Personatge p : l) {
+            ps.setInt(1, p.getId_personatge());
+            ps.setString(2, p.getNom());
+            ps.setString(3, p.getStatus());
+            ps.setString(4, p.getSpecies());
+            ps.setString(5, p.getTipus());
+            ps.setString(6, p.getGenere());
+            ps.setInt(7, p.getId_origen());
+            ps.setInt(8,p.getId_localtizacio());
+            ps.executeUpdate();
+        }
+    }catch (SQLException e ){
+        System.out.println(e);
     }
+
+}
+
 
     @Override
     public void addPersonatge(Personatge p ){
@@ -142,7 +153,7 @@ public class mysqlPersonatge implements PersonatgesDAO {
             ps.setInt(7,p.getId_origen());
             ps.setInt(8,p.getId_localtizacio());
 
-         int f =    ps.executeUpdate();
+             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -180,6 +191,21 @@ public void updatePersonatge(Personatge p ){
             }
 
 }
+
+    private Personatge map(ResultSet rs) throws SQLException {
+
+        Personatge p  = new Personatge();
+        p.setId_personatge(rs.getInt("id_personatge"));
+        p.setNom(rs.getString("nom"));
+        p.setStatus(rs.getString("status"));
+        p.setSpecies(rs.getString("especies"));
+        p.setTipus(rs.getString("tipus"));
+        p.setGenere(rs.getString("genere"));
+        p.setId_origen(rs.getInt("origen"));
+        p.setId_localtizacio(rs.getInt("localitzacio"));
+
+        return p;
+    }
 }
 
 

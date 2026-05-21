@@ -29,10 +29,10 @@ public PersonatgeParser(){ }
                 String locationUrl = node.get("location").get("url").asText();
 
                 // Sacas los IDs del final de cada URL
-                Integer idOrigen = originUrl.isEmpty() ? 0 :
+                int idOrigen = (originUrl == null || originUrl.isEmpty() )? 0 :
                         Integer.parseInt(originUrl.substring(originUrl.lastIndexOf('/') + 1));
 
-                Integer idLocation = locationUrl.isEmpty() ? 0 :
+                int idLocation = (originUrl == null || locationUrl.isEmpty() )? 0 :
                         Integer.parseInt(locationUrl.substring(locationUrl.lastIndexOf('/') + 1));
 
                 Personatge p = new Personatge(
@@ -54,6 +54,9 @@ public PersonatgeParser(){ }
 
         return llista;
     }
+
+
+
 
     public  Personatge getPersonatge(String json , int id ) {
         try {

@@ -22,7 +22,7 @@ public class Appconfig {
 
     //DAOS
  private static final  mysqlPersonatge personatgeDAO = DAOLoader.getmysqlPersonatge(bd,provider) ;
-private static final  mysqlLocalitzacion localitzacioDAO = DAOLoader.getmysqllocalitzacio(bd,provider);
+private static final mysqlLocalitzacio localitzacioDAO = DAOLoader.getmysqllocalitzacio(bd,provider);
 
 //SERVICES
 private static final personatgeService personatgeService = new personatgeService(personatgeDAO,rickmorty,localitzacioDAO);

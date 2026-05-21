@@ -17,11 +17,11 @@ public class DAOLoader {
         }
     }
 
-    public static mysqlLocalitzacion getmysqllocalitzacio(String dbType, Provider provider) {
+    public static mysqlLocalitzacio getmysqllocalitzacio(String dbType, Provider provider) {
         switch (dbType) {
 
             case "mysql":
-                return new mysqlLocalitzacion(provider);
+                return new mysqlLocalitzacio(provider);
 
             case "mongodb":
                 throw new RuntimeException("mongodb no implementat");

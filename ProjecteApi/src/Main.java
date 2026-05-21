@@ -49,5 +49,8 @@ public class Main {
         // Appconfig.personatgeController().LlistarPersonatgesBd();
 
         //Appconfig.personatgeController().mostrarPersonatgesStatus("d");
+       // Appconfig.personatgeController().actualitzarPersonatgeApi();
+        // Appconfig.personatgeController().actualitzarPersonatgeFile();
+        Appconfig.personatgeController().copiaTotal();
     }
 }

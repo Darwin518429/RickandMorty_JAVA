@@ -1,7 +1,7 @@
 package implementation.mysql.rickmorty;
 
 import Model.rickMortyDB.Localitzacion;
-import dao.LocalitacionsDAO;
+import dao.LocalitzacionsDAO;
 import dbconfig.BDC.Provider;
 
 import java.sql.Connection;
@@ -11,15 +11,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class mysqlLocalitzacion implements LocalitacionsDAO {
+public class mysqlLocalitzacio implements LocalitzacionsDAO {
 private Provider provider ;
-public mysqlLocalitzacion(Provider dao){
+public mysqlLocalitzacio(Provider dao){
     provider = dao;
 }
 
     @Override
     public Localitzacion get (Integer id){
-        System.out.println("Buscando localitzacio con id: " + id);
+
         String sql = """
                 SELECT *
                 FROM localitzacions
@@ -68,7 +68,25 @@ public mysqlLocalitzacion(Provider dao){
 
     }
 
+@Override
+public void addLocalitzacio(Localitzacion l  ){
+    String sql = """
+                INSERT IGNORE INTO localitzacions VALUES(?,?,?)
+                """;
 
+        try(Connection conn = provider.getConnection();
+        PreparedStatement ps = conn.prepareStatement(sql)
+        ){
+            ps.setInt(1,l.getId_localitzacions());
+            ps.setString(2,l.getNom());
+            ps.setString(3,l.getTipus());
+
+
+             ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+}
 
       private Localitzacion map(ResultSet rs) throws SQLException {
 

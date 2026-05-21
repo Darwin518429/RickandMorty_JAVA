@@ -4,7 +4,7 @@ import Api.ApiClientGeneric;
 import Api.RickMorty.rickmortyclient;
 import Model.rickMortyDB.Localitzacion;
 import Model.rickMortyDB.Personatge;
-import implementation.mysql.rickmorty.mysqlLocalitzacion;
+import implementation.mysql.rickmorty.mysqlLocalitzacio;
 import implementation.mysql.rickmorty.mysqlPersonatge;
 
 import java.util.ArrayList;
@@ -12,20 +12,33 @@ import java.util.List;
 import Model.DTO.*;
 public class personatgeService {
     private mysqlPersonatge  personatgedao;
-    private mysqlLocalitzacion localitzaciodao;
+    private mysqlLocalitzacio localitzaciodao;
     private rickmortyclient api;
-    public personatgeService(mysqlPersonatge personatgedao, ApiClientGeneric api, mysqlLocalitzacion l){
+    public personatgeService(mysqlPersonatge personatgedao, ApiClientGeneric api, mysqlLocalitzacio l){
         this.localitzaciodao = l;
         this.personatgedao = personatgedao;
     this.api = (rickmortyclient) api;
     }
-public void copiaParcial() throws Exception{
-    List<Personatge> personatges = api.getAllPersonatge();
+public void copiaParcialApi() throws Exception{
+    List<Personatge> personatges = api.getAllPersonatgeApi();
     personatgedao.copiaParcial(personatges);
 
 }
+public void copiaParcialFile() throws  Exception{
+        List<Personatge> personatges = api.getPersonatgesAllLocal();
+        personatgedao.copiaParcial(personatges);
+}
 
+public void copiaTotalApi()throws Exception {
+    List<Personatge> personatges = api.getAllPersonatgeApi();
 
+    personatgedao.copiaTotal(personatges);
+}
+
+public void copiaTotalFile()throws Exception{
+    List<Personatge> personatges = api.getPersonatgesAllLocal();
+    personatgedao.copiaTotal(personatges);
+}
 public List<personatgeDTO> getAllPersonatgeDTO()throws Exception{
     List<Personatge> lp = personatgedao.getAll();
     List<personatgeDTO> pdto = new ArrayList<>();
@@ -89,6 +102,28 @@ public List<personatgeDTO> getPersonatgeStatusDTO(String tipus ) throws Exceptio
 
     }
 
+    public personatgeDTO mostrarPersonatgedto(Personatge p ) throws Exception{
+        if(p == null) throw new Exception("Error");
+
+        Localitzacion origen     =  localitzaciodao.get(p.getId_origen());
+        Localitzacion actualitat =  localitzaciodao.get(p.getId_localtizacio()) ;
+
+        return new personatgeDTO(
+                    p.getNom(),
+                    p.getStatus(),
+                    p.getSpecies(),
+                    p.getTipus(),
+                    p.getGenere(),
+                    origen     != null ? origen.getNom()     : "localitzacions que no exsiteixen",
+                    actualitat != null ? actualitat.getNom() : "localitzacions que no exsiteixen"
+            );
+
+    }
+
+    public Personatge getPersonatge(int id ) throws Exception{
+        if(id < 0 ) throw  new Exception("Error");
+        return personatgedao.get(id);
+    }
 // VIA ENDPOINT
     public List<String> getJson() throws Exception{
           return   api.getJsonsPersonatge();

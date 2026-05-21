@@ -41,7 +41,6 @@ String urlEpisode = url[2];
 
 
 //VIA ENPOINT Personatge
-
     @Override
     public List<Personatge> getAllPersonatgeApi() throws Exception {
         List<Personatge> tots = new ArrayList<>();
@@ -66,7 +65,6 @@ String urlEpisode = url[2];
     String urlCanviat = urlPersonatge;
 
     while (urlCanviat != null && !urlCanviat.isBlank()) {
-
         String json = api.fetch(urlCanviat);           // fetch pagina actual
         String format = formatJson(json);
         l.add(format);
@@ -140,7 +138,7 @@ public Personatge getPersonatgeLocal(int id ) throws Exception{
 
 
 @Override
-    public List<String> getJsons() throws Exception{
+    public List<String>  getJsonsLocalitacio() throws Exception{
     List<String> txt = new ArrayList<>();
     return txt;
 }

@@ -1,11 +1,13 @@
 package Controllers.Menus;
 
 import AppConfig.Appconfig;
-import View.Classes.Menus.MainMenuView;
+import View.Classes.Menus.MenuFontView;
+import View.Classes.Menus.MenuLlistarView;
 
 import java.util.Scanner;
 
-public class MenuMain {
+public class MenuMostrarFont {
+
     private final Scanner sc = new Scanner(System.in);
 
     public void iniciar() {
@@ -13,8 +15,7 @@ public class MenuMain {
         int opcio;
 
         do {
-
-            MainMenuView.mostrarMenu();
+            MenuFontView.mostrarMenu();
 
             while (!sc.hasNextInt()) {
 
@@ -28,26 +29,20 @@ public class MenuMain {
             switch (opcio) {
 
                 case 1:
-                    new MenuLlistar().iniciar();
+                    Appconfig.personatgeController().mostrarPersonatgesApi();
                     break;
+
                 case 2:
-                    new MenuMostrarFont().iniciar();
+                    Appconfig.personatgeController().mostrarJsonArxiu();
                     break;
-
-                case 3:
-                    new MenuActualitzar().iniciar();
-                    break;
-
-                case 4:
-                    new MenuCopia().iniciar();
-                    break;
-
 
                 case 0:
-                    System.out.println("Sortint...");
+
+                    System.out.println("Tornant...");
                     break;
 
                 default:
+
                     System.out.println("Opció incorrecta");
             }
 

@@ -12,5 +12,10 @@ public  abstract class ApiClientGeneric {
         this.api = api;
         this.url = url;
     }
-
+public  int lengthUrl(){
+        return url.length;
+}
+    public String getUrl(int id ) {
+        return url[id];
+    }
 }

@@ -4,9 +4,7 @@ import Api.RickMorty.rickmortyclient;
 import Model.rickMortyDB.Localitzacio;
 import View.Classes.Messages;
 import implementation.mysql.rickmorty.mysqlLocalitzacio;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class LocalitzacioService {
     private mysqlLocalitzacio dao;

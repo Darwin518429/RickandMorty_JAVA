@@ -6,9 +6,7 @@ import Api.RickMorty.rickmortyclient;
 import dbconfig.BDC.ConfigLoader;
 
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 
 public class ApiFactory {
@@ -38,11 +36,17 @@ private static ConnectionApi api = new ApiConnection();
                     prop.getProperty("api.rickmorty.url.episode")
                     )
             );
-
+            for (ApiClientGeneric client : clients.values()) {
+                for (int i = 0; i < client.lengthUrl(); i++) {
+                    //System.out.println("DEBUG URL: " + client.getUrl(i));
+                    isUrl(client.getUrl(i));
+                }
+            }
 
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error de posar");
+           // e.printStackTrace();
+            System.out.println("ERROR: " + e.getMessage());
+            System.exit(1); // ← tanca el programa net
         }
     }
 
@@ -58,5 +62,10 @@ private static ConnectionApi api = new ApiConnection();
         }
 
         return client ; // devolvemos el provedor que usara el provider para hacer la conexion
+    }
+
+
+    private static void isUrl(String nom ) throws Exception{
+        if(!nom.matches("^https://[A-Za-z0-9._-]+(/.*)?$")) throw new Exception("ERROR de la url sintaxis ");
     }
 }

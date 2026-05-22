@@ -12,10 +12,9 @@ public class LocalitzacioParser implements Parser<Localitzacio> {
     public LocalitzacioParser(){}
 
     @Override
-    public List<Localitzacio> getAll(String json ){
+    public List<Localitzacio> getAll(String json ) throws Exception{
         List<Localitzacio> llista = new ArrayList<>();
 
-        try {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode root    = mapper.readTree(json);
             JsonNode results = root.get("results");
@@ -31,43 +30,20 @@ public class LocalitzacioParser implements Parser<Localitzacio> {
            llista.add(l);
             }
 
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
+
 
         return llista;
     }
 
 
-    public String getNextUrl(String json  ){
+    public String getNextUrl(String json  ) throws Exception{
 
-        try {
             ObjectMapper mapper = new ObjectMapper(); // Declarar aquest objecte per utilitzar jacksson
             JsonNode root    = mapper.readTree(json); // Navegar el json amb rutes igual amb XPATH
             JsonNode next = root.get("info").get("next");
 
             if (next.isNull()) return null;
             return next.asText();
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-            return null;
-        }
-
-    }
-
-    public String getPrevUrl(String json){
-
-        try {
-            ObjectMapper mapper = new ObjectMapper(); // Declarar aquest objecte per utilitzar jacksson
-            JsonNode root    = mapper.readTree(json); // Navegar el json amb rutes igual amb XPATH
-
-            return  root.get("info").get("next").asText();
-
-
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-            return null;
-        }
 
     }
 }

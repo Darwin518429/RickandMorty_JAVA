@@ -15,10 +15,10 @@ public class PersonatgeParser implements Parser<Personatge> {
 public PersonatgeParser(){ }
 
     @Override
-    public List<Personatge> getAll(String json ) {
+    public List<Personatge> getAll(String json ) throws Exception {
         List<Personatge> llista = new ArrayList<>();
 ;
-        try {
+
             ObjectMapper mapper = new ObjectMapper();
             JsonNode root    = mapper.readTree(json);
             JsonNode results = root.get("results");
@@ -48,9 +48,7 @@ public PersonatgeParser(){ }
                 llista.add(p);
             }
 
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
+
 
         return llista;
     }
@@ -58,8 +56,8 @@ public PersonatgeParser(){ }
 
 
 
-    public  Personatge getPersonatge(String json , int id ) {
-        try {
+    public  Personatge getPersonatge(String json , int id )  throws Exception{
+
             ObjectMapper mapper = new ObjectMapper();
             JsonNode root = mapper.readTree(json);
             JsonNode results = root.get("results");
@@ -88,10 +86,7 @@ public PersonatgeParser(){ }
                     return p;
                 }
             }
-        }catch (Exception e ){
-            System.out.println(e);
-            return null;
-        }
+
         return null;
     }
 
@@ -119,36 +114,18 @@ public PersonatgeParser(){ }
         );
     }
     // OBTINDRE LES DIFERENTS BD
-public String getNextUrl(String json  ){
+public String getNextUrl(String json  ) throws Exception{
 
-    try {
+
         ObjectMapper mapper = new ObjectMapper(); // Declarar aquest objecte per utilitzar jacksson
         JsonNode root    = mapper.readTree(json); // Navegar el json amb rutes igual amb XPATH
         JsonNode next = root.get("info").get("next");
 
         if (next.isNull()) return null;
         return next.asText();
-    } catch (Exception e) {
-        System.out.println("Error: " + e.getMessage());
-        return null;
-    }
+
 
 }
 
-    public String getPrevUrl(String json){
-
-        try {
-            ObjectMapper mapper = new ObjectMapper(); // Declarar aquest objecte per utilitzar jacksson
-            JsonNode root    = mapper.readTree(json); // Navegar el json amb rutes igual amb XPATH
-
-            return  root.get("info").get("next").asText();
-
-
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-            return null;
-        }
-
-    }
 }
 

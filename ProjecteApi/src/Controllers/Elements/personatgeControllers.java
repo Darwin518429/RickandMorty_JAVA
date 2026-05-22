@@ -130,6 +130,7 @@ public void actualitzarPersonatgeFile(){
 }
     public void LlistarPersonatgesBd() {
         try {
+            Messages.missatges("Carregant...");
             List<personatgeDTO> pdto = service.getAllPersonatgeDTO();
 
             for(personatgeDTO dto : pdto){

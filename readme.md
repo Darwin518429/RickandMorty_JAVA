@@ -34,7 +34,7 @@ RickandMorty_JAVA/
 
 ---
 
-## ⚙️ Requisits
+##  Requisits
 - JDBC
 - Jackson
 - Java 23 LTS

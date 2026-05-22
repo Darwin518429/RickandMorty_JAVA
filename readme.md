@@ -114,12 +114,11 @@ api.rickmorty.url.episode=https://rickandmortyapi.com/api/episode
 |-------|------------|
 | `personatges` | Personatges de Rick and Morty |
 | `localitzacions` | Localitzacions (planeta, dimensió...) |
-| `personatges_episodis` | Relació N:M entre personatges i episodis |
 
 ### Relacions
 
 ```
-localitzacions ←── personatges ──→ personatges_episodis
+localitzacions ←── personatges 
 ```
 
 > Les localitzacions s'han d'inserir **abans** que els personatges per respectar les claus forànies.

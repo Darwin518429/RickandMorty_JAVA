@@ -1,16 +1,16 @@
 package dao;
 
-import Model.rickMortyDB.Localitzacion;
+import Model.rickMortyDB.Localitzacio;
 
 import java.util.List;
 
-public interface LocalitzacionsDAO extends DAO<Localitzacion, Integer>{
+public interface LocalitzacionsDAO extends DAO<Localitzacio, Integer>{
 
     @Override
-    Localitzacion get (Integer id) ;
+    Localitzacio get (Integer id) ;
     @Override
-    List<Localitzacion> getAll();
-
-    void addLocalitzacio( Localitzacion l  );
-
+    List<Localitzacio> getAll();
+    Localitzacio searchcalitzacio(Integer id);
+    void addLocalitzacio( Localitzacio l  );
+    void insertDesconegut();
 }

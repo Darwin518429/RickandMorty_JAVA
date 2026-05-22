@@ -1,6 +1,6 @@
 package Api.RickMorty.Parsers;
 
-import Api.Parser;
+import Api.ParserTemplate.Parser;
 import Model.rickMortyDB.Personatge;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public PersonatgeParser(){ }
                 String originUrl   = node.get("origin").get("url").asText();
                 String locationUrl = node.get("location").get("url").asText();
 
-                // Sacas los IDs del final de cada URL
+                // Treure els ids
                 int idOrigen = (originUrl == null || originUrl.isEmpty() )? 0 :
                         Integer.parseInt(originUrl.substring(originUrl.lastIndexOf('/') + 1));
 
@@ -93,6 +93,30 @@ public PersonatgeParser(){ }
             return null;
         }
         return null;
+    }
+
+    public Personatge getPersonatge(String json) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode node = mapper.readTree(json);
+
+        String originUrl   = node.get("origin").get("url").asText();
+        String locationUrl = node.get("location").get("url").asText();
+
+        Integer idOrigen = originUrl.isEmpty() ? 0 :
+                Integer.parseInt(originUrl.substring(originUrl.lastIndexOf('/') + 1));
+        Integer idLocation = locationUrl.isEmpty() ? 0 :
+                Integer.parseInt(locationUrl.substring(locationUrl.lastIndexOf('/') + 1));
+
+        return new Personatge(
+                node.get("id").asInt(),
+                node.get("name").asText(),
+                node.get("status").asText(),
+                node.get("species").asText(),
+                node.get("type").asText(),
+                node.get("gender").asText(),
+                idOrigen,
+                idLocation
+        );
     }
     // OBTINDRE LES DIFERENTS BD
 public String getNextUrl(String json  ){

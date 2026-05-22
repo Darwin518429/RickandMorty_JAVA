@@ -44,13 +44,16 @@ public class Main {
             System.out.println(e);
         }*/
         //  Appconfig.personatgecontroller().copiaPersonatgeEndpoint();
+       // Appconfig.personatgeController().copiaParcialPersonatgeEndpoint();
         // Appconfig.personatgeController().mostrarJson();
         //  Appconfig.personatgecontroller().mostrarJsonArxiu();
         // Appconfig.personatgeController().LlistarPersonatgesBd();
 
         //Appconfig.personatgeController().mostrarPersonatgesStatus("d");
        // Appconfig.personatgeController().actualitzarPersonatgeApi();
-        // Appconfig.personatgeController().actualitzarPersonatgeFile();
-        Appconfig.personatgeController().copiaTotal();
+        Appconfig.personatgeController().actualitzarPersonatgeFile();
+       // Appconfig.personatgeController().copiaTotal();
+      // Appconfig.personatgeController().copiaParcialPerosonatgeLocal();
+
     }
 }

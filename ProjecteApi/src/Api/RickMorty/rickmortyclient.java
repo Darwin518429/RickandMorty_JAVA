@@ -1,20 +1,18 @@
 package Api.RickMorty;
 
-import Api.ApiClientGeneric;
-import Api.ApiClientInterface;
+import Api.ApiTemplate.ApiClientGeneric;
+import Api.ApiTemplate.ApiClientInterface;
 import Api.ConnectionEndpoint.ConnectionApi;
 import Api.RickMorty.Parsers.LocalitzacioParser;
 import Api.RickMorty.Parsers.PersonatgeParser;
-import Model.rickMortyDB.Localitzacion;
+import Model.rickMortyDB.Localitzacio;
 import Model.rickMortyDB.Personatge;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class rickmortyclient  extends ApiClientGeneric implements ApiClientInterface, Apiclient_Personatge,Apiclient_Localitzacio{
 //CARPETA
@@ -34,10 +32,9 @@ String urlEpisode = url[2];
     PersonatgeParser parserP = new PersonatgeParser();
     LocalitzacioParser parserL = new LocalitzacioParser();
     public  rickmortyclient(ConnectionApi api , String ...url ){
-    super(api,url);
+        super(api,url);
     }
 
-//Personatges
 
 
 //VIA ENPOINT Personatge
@@ -79,18 +76,15 @@ String urlEpisode = url[2];
 }
 public Personatge getPersonatgeApi(int id ) throws Exception{
 
-    List<String> json =  getJsonsPersonatge();
-        for(String j : json){
+        String url = urlPersonatge + "/" + id;
+        String json = api.fetch(url);
+        return parserP.getPersonatge(json); // parser per un sol personatge
 
-            Personatge  p = parserP.getPersonatge(j,id);
-            if(p != null) return p;
-        }
-        return null;
 }
 // VIA JSON ARXIU Personatge
 public List<String> jsonLocalAllPersonatge() throws Exception{
         List<File> personatges = Arrays.stream(rutes)
-                .filter(rutes -> rutes.getName().matches("character+"))
+                .filter(rutes -> rutes.getName().startsWith("character"))
                 .toList();
 List<String> l = new ArrayList<>();
 for(File r : personatges) {
@@ -106,8 +100,10 @@ public List<Personatge> getPersonatgesAllLocal() throws Exception{
         List<Personatge> p  = new ArrayList<>();
         List<String> local = jsonLocalAllPersonatge();
        for(String txt  : local){
-          List<Personatge> pl = parserP.getAll(txt);
-           p.addAll(pl);
+
+               List<Personatge> pl = parserP.getAll(txt);
+               p.addAll(pl);
+
        }
         return p;
 }
@@ -122,8 +118,8 @@ public Personatge getPersonatgeLocal(int id ) throws Exception{
 
 //METODES PER OBTENIR LOCALITZACIONS PER  LES FONTS DE DADES
 @Override
-    public List<Localitzacion> getAllLocalitzacionsApi() throws Exception{
-        List<Localitzacion> l  =  new ArrayList<>();
+    public List<Localitzacio> getAllLocalitzacionsApi() throws Exception{
+        List<Localitzacio> l  =  new ArrayList<>();
     String urlCanviat = urlLocation;
 
     while (urlCanviat != null && !urlCanviat.isBlank()) {
@@ -135,12 +131,47 @@ public Personatge getPersonatgeLocal(int id ) throws Exception{
         return l;
 }
 
+public List<String> getJsonsLocalitzacio () throws Exception{
+    List<File> personatges = Arrays.stream(rutes)
+            .filter(r -> r.getName().startsWith("location"))
+            .toList();
 
+    System.out.println("Filtrats: " + personatges.size());
 
-@Override
-    public List<String>  getJsonsLocalitacio() throws Exception{
-    List<String> txt = new ArrayList<>();
-    return txt;
+    List<String> l = new ArrayList<>();
+    for(File r : personatges) {
+        String json = api.fetchFile(r.getPath());
+        System.out.println("JSON llegit: " + json.substring(0, 100)); // ← ves si el JSON llega bien
+        List<Localitzacio> test = parserL.getAll(json);
+        System.out.println("Localitzacions parsejades: " + test.size()); // ← ves si el parser devuelve algo
+        l.add(json);
+    }
+    return l;
+    /*List<File> personatges = Arrays.stream(rutes)
+            .filter(rutes -> rutes.getName().startsWith("location"))
+            .toList();
+    List<String> l = new ArrayList<>();
+    for(File r : personatges) {
+        System.out.println("=== DEBUG ===");
+        for (File f : rutes) {
+            System.out.println("Arxiu trobat: " + f.getName()); // ← mira qué nombres aparecen
+        }
+        System.out.println("Filtrats: " + personatges.size());
+        String json = api.fetchFile(r.getPath());
+
+        l.add(json);
+}
+    return l ;*/
+    }
+public List<Localitzacio> getAllLocalitzacionsLocal() throws  Exception{
+    List<Localitzacio> p  = new ArrayList<>();
+
+    List<String> local = getJsonsLocalitzacio();
+    for(String txt  : local){
+        List<Localitzacio> pl = parserL.getAll(txt);
+        p.addAll(pl);
+    }
+    return p;
 }
 
 // FORMAT DE JSON

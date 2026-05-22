@@ -1,6 +1,6 @@
 package Api.RickMorty;
 
-import Api.ApiClientInterface;
+import Api.ApiTemplate.ApiClientInterface;
 import Model.rickMortyDB.Personatge;
 
 import java.util.List;

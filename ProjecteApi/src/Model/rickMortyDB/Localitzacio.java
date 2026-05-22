@@ -1,16 +1,16 @@
 package Model.rickMortyDB;
 
-public class Localitzacion {
+public class Localitzacio {
     protected int id_localitzacions;
     protected String nom,tipus;
 
-    public Localitzacion(int id_localitzacions , String nom , String tipus){
+    public Localitzacio(int id_localitzacions , String nom , String tipus){
         this.id_localitzacions = id_localitzacions;
         this.nom = nom;
         this.tipus = tipus;
     }
 
-    public Localitzacion() {
+    public Localitzacio() {
 
     }
 

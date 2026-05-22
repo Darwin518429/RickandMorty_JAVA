@@ -1,13 +1,11 @@
 package implementation.mysql.rickmorty;
 
-import Model.rickMortyDB.Localitzacion;
+import Model.rickMortyDB.Localitzacio;
+import View.Classes.Messages;
 import dao.LocalitzacionsDAO;
 import dbconfig.BDC.Provider;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +16,7 @@ public mysqlLocalitzacio(Provider dao){
 }
 
     @Override
-    public Localitzacion get (Integer id){
+    public Localitzacio get (Integer id){
 
         String sql = """
                 SELECT *
@@ -45,9 +43,9 @@ public mysqlLocalitzacio(Provider dao){
     }
 
     @Override
-    public List<Localitzacion> getAll(){
+    public List<Localitzacio> getAll(){
 
-             List<Localitzacion> lz = new ArrayList<>();
+             List<Localitzacio> lz = new ArrayList<>();
 
         String sql = "SELECT * FROM localitzacions ";
 
@@ -69,7 +67,7 @@ public mysqlLocalitzacio(Provider dao){
     }
 
 @Override
-public void addLocalitzacio(Localitzacion l  ){
+public void addLocalitzacio(Localitzacio l  ){
     String sql = """
                 INSERT IGNORE INTO localitzacions VALUES(?,?,?)
                 """;
@@ -88,9 +86,24 @@ public void addLocalitzacio(Localitzacion l  ){
         }
 }
 
-      private Localitzacion map(ResultSet rs) throws SQLException {
+public  Localitzacio searchcalitzacio(Integer id){
+    String sql = "SELECT * FROM localitzacions WHERE id_localitzacions = ?";
+try(Connection conn = provider.getConnection();
+PreparedStatement ps = conn.prepareStatement(sql);
+){
+    //Mirar con el boolean
+    ps.setInt(1,id);
+    ResultSet rs = ps.executeQuery();
+    if(rs.next()) return map(rs);
 
-        Localitzacion  l  = new Localitzacion();
+}catch (SQLException e ){
+    System.out.println(e);
+}
+    return null;
+}
+      private Localitzacio map(ResultSet rs) throws SQLException {
+
+        Localitzacio l  = new Localitzacio();
         l.setId_localitzacions(rs.getInt("id_localitzacions"));
         l.setNom(rs.getString("nom"));
         l.setTipus(rs.getString("tipus"));
@@ -98,4 +111,19 @@ public void addLocalitzacio(Localitzacion l  ){
         return l;
     }
 
+    @Override
+    public   void insertDesconegut(){
+    String sql = """
+         INSERT IGNORE INTO localitzacions VALUES (0,"Desconegut","No es sap")
+            """;
+
+    try(Connection conn = provider.getConnection();
+        Statement ps = conn.createStatement();
+    ){
+      ps.executeUpdate(sql);
+    }
+    catch (SQLException e ){
+        Messages.M_exception(e);
+    }
+    }
 }

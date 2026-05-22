@@ -1,4 +1,4 @@
-package Api;
+package Api.ApiTemplate;
 
 import Api.ConnectionEndpoint.ConnectionApi;
 

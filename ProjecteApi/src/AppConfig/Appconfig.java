@@ -1,5 +1,5 @@
 package AppConfig;
-import Api.ApiFactory;
+import Api.ApiTemplate.ApiFactory;
 import Api.RickMorty.rickmortyclient;
 import Controllers.Elements.LocalitzacioControllers;
 import Controllers.Elements.personatgeControllers;
@@ -26,9 +26,9 @@ private static final mysqlLocalitzacio localitzacioDAO = DAOLoader.getmysqllocal
 
 //SERVICES
 private static final personatgeService personatgeService = new personatgeService(personatgeDAO,rickmorty,localitzacioDAO);
-private static final LocalitzacioService localitzacioService = new LocalitzacioService(localitzacioDAO);
+private static final LocalitzacioService localitzacioService = new LocalitzacioService(localitzacioDAO,rickmorty);
     //CONTROLLERS
-    private static personatgeControllers personatgecontroller = new personatgeControllers(personatgeService);
+    private static personatgeControllers personatgecontroller = new personatgeControllers(personatgeService,localitzacioService);
     private static LocalitzacioControllers localitzaciocontroller = new LocalitzacioControllers(localitzacioService);
 
    //METODES PER PODR UTILITZAR

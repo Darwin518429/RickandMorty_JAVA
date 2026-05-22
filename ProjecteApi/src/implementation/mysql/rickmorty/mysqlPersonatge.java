@@ -22,7 +22,7 @@ public class mysqlPersonatge implements PersonatgesDAO {
         String sql = """
                 INSERT IGNORE INTO personatges  VALUES (?,?,?,?,?,?,?,?)
                 """;
-
+    System.out.println("SQL LOCAL " + llista.size());
         try (
              Connection conn = provider.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)

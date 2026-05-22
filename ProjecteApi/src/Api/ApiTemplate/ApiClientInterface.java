@@ -1,8 +1,4 @@
-package Api;
-
-import Model.rickMortyDB.Personatge;
-
-import java.util.List;
+package Api.ApiTemplate;
 
 public interface ApiClientInterface {
 

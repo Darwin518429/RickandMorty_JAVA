@@ -1,8 +1,8 @@
 package Service;
 
-import Api.ApiClientGeneric;
+import Api.ApiTemplate.ApiClientGeneric;
 import Api.RickMorty.rickmortyclient;
-import Model.rickMortyDB.Localitzacion;
+import Model.rickMortyDB.Localitzacio;
 import Model.rickMortyDB.Personatge;
 import implementation.mysql.rickmorty.mysqlLocalitzacio;
 import implementation.mysql.rickmorty.mysqlPersonatge;
@@ -22,21 +22,34 @@ public class personatgeService {
 public void copiaParcialApi() throws Exception{
     List<Personatge> personatges = api.getAllPersonatgeApi();
     personatgedao.copiaParcial(personatges);
-
+    localitzaciodao.insertDesconegut();
+    isNotValidId(personatges);
 }
 public void copiaParcialFile() throws  Exception{
         List<Personatge> personatges = api.getPersonatgesAllLocal();
+
+        /*for(Personatge p: personatges){
+            if(p.getId_origen() && p.getId_localtizacio()){
+
+            }
+        }*/
+    localitzaciodao.insertDesconegut();
+    isNotValidId(personatges);
+    System.out.println("Size: " + personatges.size());
         personatgedao.copiaParcial(personatges);
 }
 
 public void copiaTotalApi()throws Exception {
     List<Personatge> personatges = api.getAllPersonatgeApi();
-
+    localitzaciodao.insertDesconegut();
+    isNotValidId(personatges);
     personatgedao.copiaTotal(personatges);
 }
 
 public void copiaTotalFile()throws Exception{
     List<Personatge> personatges = api.getPersonatgesAllLocal();
+    localitzaciodao.insertDesconegut();
+    isNotValidId(personatges);
     personatgedao.copiaTotal(personatges);
 }
 public List<personatgeDTO> getAllPersonatgeDTO()throws Exception{
@@ -44,8 +57,8 @@ public List<personatgeDTO> getAllPersonatgeDTO()throws Exception{
     List<personatgeDTO> pdto = new ArrayList<>();
     for(Personatge p : lp ){
 
-        Localitzacion origen     =  localitzaciodao.get(p.getId_origen());
-        Localitzacion actualitat =  localitzaciodao.get(p.getId_localtizacio()) ;
+        Localitzacio origen     =  localitzaciodao.get(p.getId_origen());
+        Localitzacio actualitat =  localitzaciodao.get(p.getId_localtizacio()) ;
 
         pdto.add(new personatgeDTO(
                 p.getNom(),
@@ -75,8 +88,8 @@ public List<personatgeDTO> getPersonatgeStatusDTO(String tipus ) throws Exceptio
         List<personatgeDTO> pdto = new ArrayList<>();
         for(Personatge p : ps){
 
-            Localitzacion origen     =  localitzaciodao.get(p.getId_origen());
-            Localitzacion actualitat =  localitzaciodao.get(p.getId_localtizacio()) ;
+            Localitzacio origen     =  localitzaciodao.get(p.getId_origen());
+            Localitzacio actualitat =  localitzaciodao.get(p.getId_localtizacio()) ;
 
             pdto.add(new personatgeDTO(
                 p.getNom(),
@@ -105,8 +118,8 @@ public List<personatgeDTO> getPersonatgeStatusDTO(String tipus ) throws Exceptio
     public personatgeDTO mostrarPersonatgedto(Personatge p ) throws Exception{
         if(p == null) throw new Exception("Error");
 
-        Localitzacion origen     =  localitzaciodao.get(p.getId_origen());
-        Localitzacion actualitat =  localitzaciodao.get(p.getId_localtizacio()) ;
+        Localitzacio origen     =  localitzaciodao.get(p.getId_origen());
+        Localitzacio actualitat =  localitzaciodao.get(p.getId_localtizacio()) ;
 
         return new personatgeDTO(
                     p.getNom(),
@@ -148,6 +161,19 @@ public List<personatgeDTO> getPersonatgeStatusDTO(String tipus ) throws Exceptio
         if(id < 0 ) throw new Exception("Error");
         Personatge p = api.getPersonatgeLocal(id);
         return p;
+    }
+
+
+    private void isNotValidId(List<Personatge> p ){
+       // List<Localitzacio> local = localitzaciodao.getAll();
+
+        for (Personatge personatge:  p ){
+       personatge.setId_origen(   localitzaciodao.searchcalitzacio(personatge.getId_origen()) == null ? 0 :
+                localitzaciodao.searchcalitzacio(personatge.getId_origen()).getId_localitzacions());
+
+       personatge.setId_localtizacio( localitzaciodao.searchcalitzacio(personatge.getId_localtizacio()) == null ? 0 :
+               localitzaciodao.searchcalitzacio(personatge.getId_localtizacio()).getId_localitzacions());
+        }
     }
     }
 

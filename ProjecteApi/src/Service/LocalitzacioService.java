@@ -2,6 +2,7 @@ package Service;
 
 import Api.RickMorty.rickmortyclient;
 import Model.rickMortyDB.Localitzacio;
+import View.Classes.Messages;
 import implementation.mysql.rickmorty.mysqlLocalitzacio;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class LocalitzacioService {
     }
 
 public void addLocalitzacioApi( ) throws  Exception{
+    Messages.missatges("Carregant Localitzacio...");
         List<Localitzacio> l = api.getAllLocalitzacionsApi();
         for(Localitzacio local : l){
             dao.addLocalitzacio(local);

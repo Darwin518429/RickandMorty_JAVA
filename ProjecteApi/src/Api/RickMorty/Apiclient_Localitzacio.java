@@ -9,5 +9,5 @@ public interface Apiclient_Localitzacio extends ApiClientInterface {
 
     List<Localitzacio> getAllLocalitzacionsApi() throws Exception;
 
-    List<String> getJsonsLocalitzacio() throws Exception;
+    List<String> getJsonsLocalitzacioFile() throws Exception;
 }

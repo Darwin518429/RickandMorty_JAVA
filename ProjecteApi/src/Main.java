@@ -47,8 +47,9 @@ public class Main {
        // Appconfig.personatgeController().copiaParcialPersonatgeEndpoint();
         // Appconfig.personatgeController().mostrarJson();
         //  Appconfig.personatgecontroller().mostrarJsonArxiu();
-        Appconfig.personatgeController().LlistarPersonatgesBd();
-
+      //  Appconfig.personatgeController().LlistarPersonatgesBd();
+//Appconfig.personatgeController().mostrarJsonArxiu();
+        Appconfig.personatgeController().mostrarPersonatgesApi();
         //Appconfig.personatgeController().mostrarPersonatgesStatus("d");
        // Appconfig.personatgeController().actualitzarPersonatgeApi();
       //  Appconfig.personatgeController().actualitzarPersonatgeFile();

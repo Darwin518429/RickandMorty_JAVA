@@ -35,31 +35,37 @@ public void copiaParcialPerosonatgeLocal(){
         }
 }
 
-    public void mostrarJson(){
+    public void mostrarPersonatgesApi(){
        try {
-           List<String> l = service.getJson();
+           Messages.missatges("Carregant Api...");
+           List<Personatge> p = service.getJsonFontApi();
+           List<personatgeDTO> dto = new ArrayList<>();
 
-           for (String t : l) {
-               System.out.println(t + "\n--------------------");
+           for (Personatge personatge : p ){
+           dto.add(service.mostrarPersonatgedto(personatge));
            }
+
+           for(personatgeDTO pdto : dto){
+               Messages.missatges(pdto);
+           }
+
        }catch (Exception e){
-           System.out.println(e);
+           Messages.M_exception(e);
        }
     }
 
-    public void mostrarJsonArxiu(){
+    public void mostrarJsonArxiu() {
         try {
-            List<String> l = service.getJsonLocal();
-            for(String t : l ){
-                System.out.println(t + "\n------------------");
+            List<Personatge> p = service.getJsonFontFile();
+
+            for (Personatge personatge : p) {
+                Messages.missatges(service.mostrarPersonatgedto(personatge));
             }
-        }
-        catch (Exception e ){
-            System.out.println(e);
-        }
 
+        } catch (Exception e) {
+            Messages.M_exception(e);
+        }
     }
-
     public void mostrarPersonatgesStatus(String p){
         try{
            List<personatgeDTO> pdto =  service.getPersonatgeStatusDTO(p);
@@ -147,7 +153,7 @@ public void actualitzarPersonatgeFile(){
         Messages.missatges("Copia total\n1.Arxiu\n2.Api Endpoint");
         int opcio = sc.nextInt();
         sc.nextLine();
-            Messages.missatges("Carregant Localitzacio...");
+
         localitzacioService.addLocalitzacioApi();
         switch (opcio){
             case 1 :

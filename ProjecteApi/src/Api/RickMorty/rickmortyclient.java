@@ -13,6 +13,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.RecursiveTask;
 
 public class rickmortyclient  extends ApiClientGeneric implements ApiClientInterface, Apiclient_Personatge,Apiclient_Localitzacio{
 //CARPETA
@@ -56,24 +57,7 @@ String urlEpisode = url[2];
     }
 
 
-    public List<String> getJsonsPersonatge() throws Exception{
-        List<String> l = new ArrayList<>();
 
-    String urlCanviat = urlPersonatge;
-
-    while (urlCanviat != null && !urlCanviat.isBlank()) {
-        String json = api.fetch(urlCanviat);           // fetch pagina actual
-        String format = formatJson(json);
-        l.add(format);
-        urlCanviat = parserP.getNextUrl(json);
-
-        // termina fins estar buit
-
-        Thread.sleep(500); // FER UNA PAUSA PER CADA PAGINA AIXO EL FEM PERQUE EL PROVEIDOR POT BLOQUEHAR SI DETECTA MOLTS PETICIONS
-
-    }
-    return  l;
-}
 public Personatge getPersonatgeApi(int id ) throws Exception{
 
         String url = urlPersonatge + "/" + id;
@@ -81,6 +65,29 @@ public Personatge getPersonatgeApi(int id ) throws Exception{
         return parserP.getPersonatge(json); // parser per un sol personatge
 
 }
+
+//Mostrar contingut fonts
+    public List<Personatge>  getFontpi() throws Exception{
+        List<Personatge> p = new ArrayList<>();
+        List<String> jsons  = getJsonsPersonatgeApi();
+        for(String j : jsons){
+            p.addAll(parserP.getAll(j));
+        }
+        return  p;
+
+    }
+
+    public List<Personatge> getFontFile() throws Exception{
+        List<Personatge> p = new ArrayList<>();
+        List<String> json = jsonLocalAllPersonatge();
+       for(String jsons : json){
+            p.addAll(parserP.getAll(jsons));
+        }
+
+        return p;
+    }
+
+
 // VIA JSON ARXIU Personatge
 public List<String> jsonLocalAllPersonatge() throws Exception{
         List<File> personatges = Arrays.stream(rutes)
@@ -100,10 +107,8 @@ public List<Personatge> getPersonatgesAllLocal() throws Exception{
         List<Personatge> p  = new ArrayList<>();
         List<String> local = jsonLocalAllPersonatge();
        for(String txt  : local){
-
                List<Personatge> pl = parserP.getAll(txt);
                p.addAll(pl);
-
        }
         return p;
 }
@@ -131,48 +136,48 @@ public Personatge getPersonatgeLocal(int id ) throws Exception{
         return l;
 }
 
-public List<String> getJsonsLocalitzacio () throws Exception{
+public List<String> getJsonsLocalitzacioFile() throws Exception{
     List<File> personatges = Arrays.stream(rutes)
             .filter(r -> r.getName().startsWith("location"))
             .toList();
 
-    System.out.println("Filtrats: " + personatges.size());
-
     List<String> l = new ArrayList<>();
     for(File r : personatges) {
         String json = api.fetchFile(r.getPath());
-        System.out.println("JSON llegit: " + json.substring(0, 100)); // ← ves si el JSON llega bien
-        List<Localitzacio> test = parserL.getAll(json);
-        System.out.println("Localitzacions parsejades: " + test.size()); // ← ves si el parser devuelve algo
         l.add(json);
     }
     return l;
-    /*List<File> personatges = Arrays.stream(rutes)
-            .filter(rutes -> rutes.getName().startsWith("location"))
-            .toList();
-    List<String> l = new ArrayList<>();
-    for(File r : personatges) {
-        System.out.println("=== DEBUG ===");
-        for (File f : rutes) {
-            System.out.println("Arxiu trobat: " + f.getName()); // ← mira qué nombres aparecen
-        }
-        System.out.println("Filtrats: " + personatges.size());
-        String json = api.fetchFile(r.getPath());
 
-        l.add(json);
-}
-    return l ;*/
     }
 public List<Localitzacio> getAllLocalitzacionsLocal() throws  Exception{
     List<Localitzacio> p  = new ArrayList<>();
 
-    List<String> local = getJsonsLocalitzacio();
+    List<String> local = getJsonsLocalitzacioFile();
     for(String txt  : local){
         List<Localitzacio> pl = parserL.getAll(txt);
         p.addAll(pl);
     }
     return p;
 }
+
+    private List<String> getJsonsPersonatgeApi() throws Exception{
+        List<String> l = new ArrayList<>();
+
+        String urlCanviat = urlPersonatge;
+
+        while (urlCanviat != null && !urlCanviat.isBlank()) {
+            String json = api.fetch(urlCanviat);           // fetch pagina actual
+            String format = formatJson(json);
+            l.add(format);
+            urlCanviat = parserP.getNextUrl(json);
+
+            // termina fins estar buit
+
+            Thread.sleep(500); // FER UNA PAUSA PER CADA PAGINA AIXO EL FEM PERQUE EL PROVEIDOR POT BLOQUEHAR SI DETECTA MOLTS PETICIONS
+
+        }
+        return  l;
+    }
 
 // FORMAT DE JSON
 private String formatJson(String json){

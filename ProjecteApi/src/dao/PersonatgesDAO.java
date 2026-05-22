@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface PersonatgesDAO extends DAO<Personatge, Integer>{
 
-    //void set (Integer id );
-
 @Override
     Personatge get (Integer id) ;
 @Override

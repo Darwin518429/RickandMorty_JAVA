@@ -137,10 +137,13 @@ public List<personatgeDTO> getPersonatgeStatusDTO(String tipus ) throws Exceptio
         if(id < 0 ) throw  new Exception("Error");
         return personatgedao.get(id);
     }
-// VIA ENDPOINT
-    public List<String> getJson() throws Exception{
-          return   api.getJsonsPersonatge();
-
+// VIA ENDPOINT MOLSTRAR
+    public List<Personatge> getJsonFontApi() throws Exception{
+        return   api.getFontpi().isEmpty() ? null : api.getFontpi();
+    }
+//Via File
+    public List<Personatge> getJsonFontFile() throws Exception{
+        return   api.getFontFile().isEmpty() ? null : api.getFontFile();
     }
 
     public Personatge getPersonatgeApi(int id ) throws Exception{

@@ -29,14 +29,14 @@ private static final personatgeService personatgeService = new personatgeService
 private static final LocalitzacioService localitzacioService = new LocalitzacioService(localitzacioDAO,rickmorty);
     //CONTROLLERS
     private static personatgeControllers personatgecontroller = new personatgeControllers(personatgeService,localitzacioService);
-    private static LocalitzacioControllers localitzaciocontroller = new LocalitzacioControllers(localitzacioService);
+   // private static LocalitzacioControllers localitzaciocontroller = new LocalitzacioControllers(localitzacioService);
 
    //METODES PER PODR UTILITZAR
     public static personatgeControllers personatgeController(){
         return personatgecontroller;
     }
 
-    public static LocalitzacioControllers localitzacioController(){return localitzaciocontroller;}
+    //public static LocalitzacioControllers localitzacioController(){return localitzaciocontroller;}
 
 
 

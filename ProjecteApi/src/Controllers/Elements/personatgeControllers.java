@@ -66,9 +66,17 @@ public void copiaParcialPerosonatgeLocal(){
             Messages.M_exception(e);
         }
     }
-    public void mostrarPersonatgesStatus(String p){
+    public void mostrarPersonatgesStatus(){
         try{
-           List<personatgeDTO> pdto =  service.getPersonatgeStatusDTO(p);
+         Map<Integer,String> status = new HashMap<>();
+         List<String> l = service.getStatus();
+         for(int i = 0; i < l.size(); i++){
+             status.put((i + 1 ), l.get(i));
+             Messages.missatges((i + 1) + " " + status.get(i + 1));
+         }
+         int p = sc.nextInt();
+                 sc.nextLine();
+           List<personatgeDTO> pdto =  service.getPersonatgeStatusDTO(status.get(p));
            for(personatgeDTO dto : pdto){
                System.out.println(dto);
            }

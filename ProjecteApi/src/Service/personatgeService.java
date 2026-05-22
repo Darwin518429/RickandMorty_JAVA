@@ -28,11 +28,6 @@ public void copiaParcialApi() throws Exception{
 public void copiaParcialFile() throws  Exception{
         List<Personatge> personatges = api.getPersonatgesAllLocal();
 
-        /*for(Personatge p: personatges){
-            if(p.getId_origen() && p.getId_localtizacio()){
-
-            }
-        }*/
     localitzaciodao.insertDesconegut();
     isNotValidId(personatges);
     System.out.println("Size: " + personatges.size());
@@ -82,7 +77,10 @@ public List<Personatge> getPersonatgeall() throws Exception{
 
 public List<personatgeDTO> getPersonatgeStatusDTO(String tipus ) throws Exception{
         if(tipus.isBlank()) throw new Exception("ERROR");
-        if(!tipus.equals("Alive") && !tipus.equals("unknown") && !tipus.equals("Dead")) throw new Exception("Error no existeix el tipus ");
+        List<String> status = personatgedao.getStatusPersonatge();
+
+        if (!status.contains(tipus)) throw new Exception("Error no existeix el tipus ");
+
         List<Personatge> ps = personatgedao.getStatus(tipus);
 
         List<personatgeDTO> pdto = new ArrayList<>();
@@ -168,7 +166,6 @@ public List<personatgeDTO> getPersonatgeStatusDTO(String tipus ) throws Exceptio
 
 
     private void isNotValidId(List<Personatge> p ){
-       // List<Localitzacio> local = localitzaciodao.getAll();
 
         for (Personatge personatge:  p ){
        personatge.setId_origen(   localitzaciodao.searchcalitzacio(personatge.getId_origen()) == null ? 0 :
@@ -177,6 +174,12 @@ public List<personatgeDTO> getPersonatgeStatusDTO(String tipus ) throws Exceptio
        personatge.setId_localtizacio( localitzaciodao.searchcalitzacio(personatge.getId_localtizacio()) == null ? 0 :
                localitzaciodao.searchcalitzacio(personatge.getId_localtizacio()).getId_localitzacions());
         }
+    }
+
+    public List<String> getStatus() throws Exception{
+        List<String> s = personatgedao.getStatusPersonatge();
+        if(s.isEmpty()) throw  new Exception("Error");
+        return s;
     }
     }
 

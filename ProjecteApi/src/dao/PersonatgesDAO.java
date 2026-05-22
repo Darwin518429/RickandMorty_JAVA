@@ -16,4 +16,5 @@ void copiaParcial(List<Personatge> l );
 void copiaTotal(List<Personatge> l );
 void addPersonatge(Personatge p );
 void updatePersonatge(Personatge p );
+List<String> getStatusPersonatge();
 }

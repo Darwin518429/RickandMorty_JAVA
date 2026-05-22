@@ -1,14 +1,12 @@
 package implementation.mysql.rickmorty;
 
 import Model.rickMortyDB.Personatge;
+import View.Classes.Messages;
 import dao.PersonatgesDAO;
 import dbconfig.BDC.Provider;
 
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 public class mysqlPersonatge implements PersonatgesDAO {
     Provider provider;
@@ -205,6 +203,28 @@ public void updatePersonatge(Personatge p ){
         p.setId_localtizacio(rs.getInt("localitzacio"));
 
         return p;
+    }
+    @Override
+    public List<String> getStatusPersonatge(){
+        List<String> llista = new ArrayList<>();
+        String SQL = """
+                SELECT  DISTINCT status 
+                FROM personatges
+                """;
+
+        try(Connection conn = provider.getConnection();
+            Statement st = conn.createStatement();
+        ){
+           ResultSet rs =  st.executeQuery(SQL);
+
+           while(rs.next()){
+               llista.add(rs.getString("status"));
+           }
+           return  llista;
+        }catch (SQLException e ){
+            Messages.M_exception(e);
+            return null;
+        }
     }
 }
 
